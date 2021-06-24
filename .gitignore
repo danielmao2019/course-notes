@@ -1,5 +1,3 @@
-*
+*.rmd
 
-!*.pdf
-!.gitignore
-!README.md
+*datasets/
