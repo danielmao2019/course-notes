@@ -1,0 +1,101 @@
+\documentclass[stat_333_lecture_notes.tex]{subfiles}
+
+\begin{document}
+
+\lhead{STAT 333 Stochastic Processes 1}
+\rhead{Chapter 2 Exercises}
+
+\begin{Example}
+    Suppose that \(W\), \(X\), and \(Y\) are independent continuous random variables on \((0,+\infty)\).
+    If \(Z = X \mid (X<Y)\), then show that \((W,X) \mid (W<X<Y)\) and \((W,Z) \mid (W<Z)\) are identically distributed.
+\end{Example}
+\begin{proof}
+
+    To show that the two random variables have the same distribution,
+    it suffices to show that they have the same CDF.
+
+    \noindent \underline{Part 1.}
+
+    Let us first consider the CDF \(G(w,x)\) of \((W,X) \mid (W<X<Y)\).
+    For \(w,x \geq 0\),
+    \begin{align*}
+        G(w,x) & = \mathbb{P}(W \leq w, X \leq x \mid W<X<Y)                              \\
+               & = \frac{\mathbb{P}(W \leq w, X \leq x, W<X<Y)}{\mathbb{P}(W<X<Y)}        \\
+               & = \frac{\mathbb{P}(W \leq w, X \leq x, W<X, X<Y)}{\mathbb{P}(W<X, X<Y)}.
+    \end{align*}
+    Conditioning on the random variable \(X\) and noting that
+    \(W\), \(X\), and \(Y\) are independent random variables, we get
+    \begin{align*}
+        \mathbb{P}(W \leq w, X \leq x, W < X, X<Y) & = \int_{0}^{+\infty}\mathbb{P}(W \leq w, X \leq x, W<X, X<Y \mid X=s)f_{X}(s)ds \\
+                                                   & = \int_{0}^{+\infty}\mathbb{P}(W \leq w, s \leq x, W<s, s<Y \mid X=s)f_{X}(s)ds \\
+                                                   & = \int_{0}^{+\infty}\mathbb{P}(W \leq w, s \leq x, W<s, s<Y)f_{X}(s)ds          \\
+                                                   & = \int_{0}^{x}\mathbb{P}(W \leq w, W<s, s<Y)f_{X}(s)ds                          \\
+                                                   & = \int_{0}^{x}\mathbb{P}(W \leq \min\{w,s\}, s<Y)f_{X}(s)ds                     \\
+                                                   & = \int_{0}^{x}\mathbb{P}(W \leq \min\{w,s\})\mathbb{P}(s<Y)f_{X}(s)ds
+    \end{align*}
+    and
+    \begin{align*}
+        \mathbb{P}(W<X, X<Y) & = \int_{0}^{+\infty}\mathbb{P}(W<X, X<Y \mid X=s)f_{X}(s)ds   \\
+                             & = \int_{0}^{+\infty}\mathbb{P}(W<s, s<Y \mid X=s)f_{X}(s)ds   \\
+                             & = \int_{0}^{+\infty}\mathbb{P}(W<s, s<Y)f_{X}(s)ds            \\
+                             & = \int_{0}^{+\infty}\mathbb{P}(W<s)\mathbb{P}(s<Y)f_{X}(s)ds.
+    \end{align*}
+    So
+    \[G(w,x) = \int_{0}^{x}\mathbb{P}(W \leq \min\{w,s\})\mathbb{P}(s<Y)f_{X}(s)ds \bigg/ \int_{0}^{+\infty}\mathbb{P}(W<s)\mathbb{P}(s<Y)f_{X}(s)ds.\]
+
+    \noindent \underline{Part 2.}
+
+    To get the CDF of \((W,Z) \mid (W<Z)\) we first need the distribution of \(Z\).
+    The CDF of \(Z\) is calculated by:
+    \begin{align*}
+        \mathbb{P}(Z \leq z) & = \mathbb{P}(X \leq z \mid X<Y)                                                           \\
+                             & = \frac{\mathbb{P}(X \leq z, X<Y)}{\mathbb{P}(X<Y)}                                       \\
+                             & = \frac{1}{\mathbb{P}(X<Y)}\int_{0}^{+\infty}\mathbb{P}(X \leq z, X<Y \mid X=s)f_{X}(s)ds \\
+                             & = \frac{1}{\mathbb{P}(X<Y)}\int_{0}^{+\infty}\mathbb{P}(s \leq z, s<Y \mid X=s)f_{X}(s)ds \\
+                             & = \frac{1}{\mathbb{P}(X<Y)}\int_{0}^{+\infty}\mathbb{P}(s \leq z, s<Y)f_{X}(s)ds          \\
+                             & = \frac{1}{\mathbb{P}(X<Y)}\int_{0}^{z}\mathbb{P}(s<Y)f_{X}(s)ds.
+    \end{align*}
+    and so the PDF of \(Z\) is given by
+    \begin{align*}
+        h_{Z}(z) & = \frac{d}{dz}\mathbb{P}(Z \leq z)                                           \\
+                 & = \frac{d}{dz}\frac{1}{\mathbb{P}(X<Y)}\int_{0}^{z}\mathbb{P}(s<Y)f_{X}(s)ds \\
+                 & = \frac{1}{\mathbb{P}(X<Y)}\frac{d}{dz}\int_{0}^{z}\mathbb{P}(s<Y)f_{X}(s)ds \\
+                 & = \frac{1}{\mathbb{P}(X<Y)}\mathbb{P}(z<Y)f_{X}(z).
+    \end{align*}
+
+    \noindent \underline{Part 3.}
+
+    Now the joint conditional CDF of \((W,Z) \mid (W<Z)\) is given by
+    \begin{align*}
+        H(w,z) = \mathbb{P}(W \leq w, Z \leq z \mid W<Z) = \frac{\mathbb{P}(W \leq w, Z \leq z, W<Z)}{\mathbb{P}(W<Z)}.
+    \end{align*}
+    Due to the independence of \(W\) with \(X\) and \(Y\),
+    we get the numerator is:
+    \begin{align*}
+        \mathbb{P}(W \leq w, Z \leq z, W<Z) & = \int_{0}^{+\infty}\mathbb{P}(W \leq w, Z \leq z, W<Z \mid Z=s)h_{Z}(s)ds                     \\
+                                            & = \int_{0}^{+\infty}\mathbb{P}(W \leq w, s \leq z, W<s \mid Z=s)h_{Z}(s)ds                     \\
+                                            & = \int_{0}^{+\infty}\mathbb{P}(W \leq w, s \leq z, W<s)h_{Z}(s)ds                              \\
+                                            & = \int_{0}^{z}\mathbb{P}(W \leq w, W<s)h_{Z}(s)ds                                              \\
+                                            & = \int_{0}^{z}\mathbb{P}(W \leq \min\{w,s\})\frac{1}{\mathbb{P}(X<Y)}\mathbb{P}(s<Y)f_{X}(s)ds \\
+                                            & = \frac{1}{\mathbb{P}(X<Y)}\int_{0}^{z}\mathbb{P}(W \leq \min\{w,s\})\mathbb{P}(s<Y)f_{X}(s)ds
+    \end{align*}
+    and the denominator is:
+    \begin{align*}
+        \mathbb{P}(W<Z) & = \int_{0}^{+\infty}\mathbb{P}(W<Z \mid Z=s)f_{Z}(s)ds                                 \\
+                        & = \int_{0}^{+\infty}\mathbb{P}(W<s \mid Z=s)f_{Z}(s)ds                                 \\
+                        & = \int_{0}^{+\infty}\mathbb{P}(W<s)f_{Z}(s)ds                                          \\
+                        & = \int_{0}^{+\infty}\mathbb{P}(W<s)\frac{1}{\mathbb{P}(X<Y)}\mathbb{P}(s<Y)f_{X}(s)ds  \\
+                        & = \frac{1}{\mathbb{P}(X<Y)}\int_{0}^{+\infty}\mathbb{P}(W<s)\mathbb{P}(s<Y)f_{X}(s)ds.
+    \end{align*}
+    So
+    \[H(w,z) = \int_{0}^{z}\mathbb{P}(W \leq \min\{w,s\})\mathbb{P}(s<Y)f_{X}(s)ds \bigg/ \int_{0}^{+\infty}\mathbb{P}(W<s)\mathbb{P}(s<Y)f_{X}(s)ds.\]
+
+    \noindent \underline{Part 4.}
+
+    Notice \(G(w,x)\) and \(H(w,z)\) are identical.
+    This implies that \((W,X) \mid (W<X<Y) \sim (W,Z) \mid (W<Z)\).
+\end{proof}
+
+\newpage
+
+\end{document}
